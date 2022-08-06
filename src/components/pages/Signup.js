@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+
 import { api } from "../../utils/api";
+import MainPage from "../layout/Signin-Signup/MainPage";
 
 export default function Signup() {
     const [user, setUser] = useState({
@@ -10,7 +12,7 @@ export default function Signup() {
         confirmPassword: "",
         email: "",
         role: "CLIENT",
-        adminPassword: "-",
+        adminPassword: "",
     });
     const [passwordError, setPasswordError] = useState(false);
 
@@ -25,6 +27,10 @@ export default function Signup() {
         setPasswordError(false);
         delete user.confirmPassword;
 
+        if ((user.adminPassword.length = 0)) {
+            user.adminPassword = "-";
+        }
+
         const promise = api.post("/signup", user);
         promise.then(() => {
             navigate("/signin");
@@ -36,13 +42,14 @@ export default function Signup() {
     }
 
     return (
-        <Main
-            passwordBorder={
-                passwordError ? "var(--error-color)" : "var(--accent-color)"
-            }
-        >
-            <div></div>
-            <form onSubmit={sendUser}>
+        <MainPage>
+            <h1>Cadastro</h1>
+            <Form
+                onSubmit={sendUser}
+                passwordBorder={
+                    passwordError ? "var(--error-color)" : "var(--accent-color)"
+                }
+            >
                 <input
                     type="text"
                     placeholder="Nome"
@@ -102,70 +109,20 @@ export default function Signup() {
                     <></>
                 )}
                 <button type="submit">Cadastrar</button>
-            </form>
+            </Form>
             <Link to="/signin">Já possui uma conta? Faça login!</Link>
-        </Main>
+        </MainPage>
     );
 }
 
-const Main = styled.main`
-    background-color: var(--primary-color);
-
-    div {
-        width: 200px;
-        height: 200px;
-        background-color: black;
-        margin: 20px 0px;
-    }
-
-    form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    form input,
-    form select {
-        width: 317px;
-        height: 40px;
-        border-radius: 5px;
-        padding: 5px;
-        margin-bottom: 10px;
-        border: 1px solid var(--accent-color);
-        font-size: 18px;
-        background-color: #ffffff;
-    }
-
-    form input:focus,
-    form select:focus {
-        outline: 2px solid var(--accent-color);
-    }
-
-    form input::placeholder {
-        font-size: 16px;
-    }
-
-    form input.password {
+const Form = styled.form`
+    input.password {
         border: 1px solid ${(props) => props.passwordBorder};
     }
 
-    form p {
+    p {
         color: var(--error-color);
         font-weight: 700;
         margin-bottom: 10px;
-    }
-
-    button {
-        width: 200px;
-        height: 40px;
-        background-color: var(--button-color);
-        border: none;
-        border-radius: 10px;
-        font-size: 18px;
-        margin: 15px 0px;
-    }
-
-    a {
-        font-size: 18px;
     }
 `;

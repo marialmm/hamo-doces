@@ -72,7 +72,7 @@ export const GlobalStyle = createGlobalStyle`
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: space-around;
+        justify-content: center;
         padding-bottom: 10px;
     }
 
