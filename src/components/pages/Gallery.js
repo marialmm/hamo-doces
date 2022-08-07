@@ -1,5 +1,15 @@
+import styled from "styled-components"
+import Header from "../layout/Header/Header";
+
 export default function Gallery(){
     return(
-        <h1>Galeria</h1>
+        <>
+            <Header />
+            <Main>
+
+            </Main>
+        </>
     )
 }
+
+const Main = styled.main``;

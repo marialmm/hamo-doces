@@ -67,13 +67,15 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     main{
-        min-height: 100vh;
+        min-height: calc(100vh - 70px);
+        height: 100%;
         width: 100vw;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         padding-bottom: 10px;
+        margin-top: 70px;
     }
 
     a:visited{

@@ -1,9 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 export default function MainPage({ children }) {
+    const navigate = useNavigate();
     return (
         <Main>
-            <div></div>
+            <div onClick={() => navigate("/")}></div>
             {children}
         </Main>
     );
@@ -11,6 +13,9 @@ export default function MainPage({ children }) {
 
 const Main = styled.main`
     background-color: var(--primary-color);
+    min-height: 100vh;
+    height: 100%;
+    margin-top: 0px;
 
     div {
         width: 180px;
