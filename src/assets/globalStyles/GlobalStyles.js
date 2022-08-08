@@ -76,6 +76,7 @@ export const GlobalStyle = createGlobalStyle`
         justify-content: center;
         padding-bottom: 10px;
         margin-top: 70px;
+        background-color: var(--primary-color);
     }
 
     a:visited{

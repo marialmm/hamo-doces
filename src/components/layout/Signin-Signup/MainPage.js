@@ -12,7 +12,6 @@ export default function MainPage({ children }) {
 }
 
 const Main = styled.main`
-    background-color: var(--primary-color);
     min-height: 100vh;
     height: 100%;
     margin-top: 0px;

@@ -93,7 +93,7 @@ export default function Signup() {
                     required
                 >
                     <option value={"CLIENT"}>Cliente</option>
-                    <option value={"ADMIN"}>Admin</option>
+                    <option value={"ADMIN"}>Administrador</option>
                 </select>
                 {user.role === "ADMIN" ? (
                     <input
