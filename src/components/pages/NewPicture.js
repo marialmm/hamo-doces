@@ -20,7 +20,7 @@ export default function NewPicture() {
 
     function sendPictureInfo(e) {
         e.preventDefault();
-        const promise = api.post("/picture", pictureInfo, header);
+        const promise = api.post("/pictures", pictureInfo, header);
         promise.then(() => {
             navigate("/");
         });

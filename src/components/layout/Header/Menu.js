@@ -60,6 +60,7 @@ const Container = styled.div`
         display: flex;
         align-items: center;
         margin-top: 10px;
+        cursor: pointer;
     }
 
     aside ul li svg {

@@ -6,6 +6,7 @@ import { UserContext } from "../../assets/contexts/userContext";
 import { api } from "../../utils/api";
 import Header from "../layout/Header/Header";
 import { useNavigate } from "react-router-dom";
+import PictureInfo from "../layout/Gallery/PictureInfo";
 
 export default function Gallery() {
     const [gallery, setGallery] = useState([]);
@@ -14,6 +15,10 @@ export default function Gallery() {
     const [filter, setFilter] = useState({
         themeId: 0,
         productId: 0,
+    });
+    const [pictureInfo, setPictureInfo] = useState({
+        show: false,
+        id: 0,
     });
 
     const { user } = useContext(UserContext);
@@ -44,6 +49,13 @@ export default function Gallery() {
             getFilter += `&product=${filter.productId}`;
         }
         return getFilter;
+    }
+
+    function showPictureInfo(id) {
+        setPictureInfo({
+            show: true,
+            id: id,
+        });
     }
 
     return (
@@ -94,6 +106,7 @@ export default function Gallery() {
                                 <img
                                     src={picture.pictureUrl}
                                     key={picture.id}
+                                    onClick={() => showPictureInfo(picture.id)}
                                 />
                             ))}
                         </section>
@@ -102,6 +115,14 @@ export default function Gallery() {
                 {user && user.role === "ADMIN" ? (
                     <AiFillPlusCircle
                         onClick={() => navigate("/gallery/new")}
+                    />
+                ) : (
+                    <></>
+                )}
+                {pictureInfo.show ? (
+                    <PictureInfo
+                        pictureInfo={pictureInfo}
+                        setPictureInfo={setPictureInfo}
                     />
                 ) : (
                     <></>
@@ -118,6 +139,9 @@ const Main = styled.main`
     h2 {
         font-size: 20px;
         font-weight: 600;
+        width: 100%;
+        text-align: center;
+        margin-top: 20px;
     }
 
     form {
@@ -150,6 +174,7 @@ const Main = styled.main`
     section img {
         width: 150px;
         margin: 15px;
+        cursor: pointer;
     }
 
     svg {
