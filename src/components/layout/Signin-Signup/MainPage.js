@@ -15,6 +15,8 @@ const Main = styled.main`
     min-height: 100vh;
     height: 100%;
     margin-top: 0px;
+    align-items: center;
+    justify-content: center;
 
     div {
         width: 180px;

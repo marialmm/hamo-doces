@@ -5,6 +5,7 @@ import { AiFillPlusCircle } from "react-icons/ai";
 import { UserContext } from "../../assets/contexts/userContext";
 import { api } from "../../utils/api";
 import Header from "../layout/Header/Header";
+import { useNavigate } from "react-router-dom";
 
 export default function Gallery() {
     const [gallery, setGallery] = useState([]);
@@ -16,6 +17,7 @@ export default function Gallery() {
     });
 
     const { user } = useContext(UserContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const galleryPromise = api.get(`/pictures${getFilter()}`);
@@ -36,10 +38,10 @@ export default function Gallery() {
     function getFilter() {
         let getFilter = "?";
         if (filter.themeId != 0) {
-            getFilter += `& theme=${filter.themeId}`;
+            getFilter += `&theme=${filter.themeId}`;
         }
         if (filter.productId != 0) {
-            getFilter += `& product=${filter.productId}`;
+            getFilter += `&product=${filter.productId}`;
         }
         return getFilter;
     }
@@ -97,7 +99,13 @@ export default function Gallery() {
                         </section>
                     </>
                 )}
-                {user && user.role === "ADMIN" ? <AiFillPlusCircle /> : <></>}
+                {user && user.role === "ADMIN" ? (
+                    <AiFillPlusCircle
+                        onClick={() => navigate("/gallery/new")}
+                    />
+                ) : (
+                    <></>
+                )}
             </Main>
         </>
     );
@@ -106,7 +114,6 @@ export default function Gallery() {
 const Main = styled.main`
     justify-content: flex-start;
     align-items: flex-start;
-    position: relative;
 
     h2 {
         font-size: 20px;
@@ -151,5 +158,6 @@ const Main = styled.main`
         right: 25px;
         font-size: 50px;
         color: var(--button-color);
+        cursor: pointer;
     }
 `;

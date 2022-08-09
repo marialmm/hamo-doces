@@ -72,8 +72,8 @@ export const GlobalStyle = createGlobalStyle`
         width: 100vw;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
+        align-items: flex-start;
         padding-bottom: 10px;
         margin-top: 70px;
         background-color: var(--primary-color);
