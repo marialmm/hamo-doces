@@ -1,14 +1,17 @@
 import { ClickAwayListener } from "@mui/base";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
 import { AiFillCloseCircle } from "react-icons/ai";
 
 import { api } from "../../../utils/api";
+import { UserContext } from "../../../assets/contexts/userContext";
 
 export default function PictureInfo({ pictureInfo, setPictureInfo }) {
     const { id, show } = pictureInfo;
     const [picture, setPicture] = useState({});
+
+    const { user } = useContext(UserContext);
 
     useEffect(() => {
         const promise = api.get(`/pictures/${id}`);
@@ -80,18 +83,19 @@ const Section = styled.section`
     }
 
     svg {
+        color: var(--accent-color);
+        cursor: pointer;
         position: absolute;
         top: 10px;
         right: 10px;
         font-size: 25px;
-        color: var(--accent-color);
-        cursor: pointer;
     }
 `;
 
 const customStyles = {
     overlay: {
         backgroundColor: " #00000052",
+        zIndex: 1,
     },
     content: {
         top: "50%",

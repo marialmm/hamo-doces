@@ -1,12 +1,17 @@
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import { AiFillPlusCircle } from "react-icons/ai";
+import {
+    AiFillPlusCircle,
+    AiTwotoneDelete,
+    AiTwotoneEdit,
+} from "react-icons/ai";
 
 import { UserContext } from "../../assets/contexts/userContext";
 import { api } from "../../utils/api";
 import Header from "../layout/Header/Header";
 import { useNavigate } from "react-router-dom";
 import PictureInfo from "../layout/Gallery/PictureInfo";
+import DeletePopUp from "../layout/PopUp/DeletePopUp";
 
 export default function Gallery() {
     const [gallery, setGallery] = useState([]);
@@ -17,6 +22,10 @@ export default function Gallery() {
         productId: 0,
     });
     const [pictureInfo, setPictureInfo] = useState({
+        show: false,
+        id: 0,
+    });
+    const [deletePopUp, setDeletePopUp] = useState({
         show: false,
         id: 0,
     });
@@ -58,56 +67,79 @@ export default function Gallery() {
         });
     }
 
+    function showDeletePopUp(id) {
+        setDeletePopUp({
+            show: true,
+            id: id,
+        });
+    }
+
     return (
         <>
             <Header />
             <Main>
+                <form>
+                    <p>Filtrar por:</p>
+                    <select
+                        value={filter.themeId}
+                        onChange={(e) =>
+                            setFilter({
+                                ...filter,
+                                themeId: e.target.value,
+                            })
+                        }
+                    >
+                        <option value={0}>Tema</option>
+                        {themes.map((theme) => (
+                            <option value={theme.id} key={theme.id}>
+                                {theme.name}
+                            </option>
+                        ))}
+                    </select>
+                    <select
+                        value={filter.productId}
+                        onChange={(e) =>
+                            setFilter({
+                                ...filter,
+                                productId: e.target.value,
+                            })
+                        }
+                    >
+                        <option value={0}>Produto</option>
+                        {products.map((product) => (
+                            <option value={product.id} key={product.id}>
+                                {product.name}
+                            </option>
+                        ))}
+                    </select>
+                </form>
                 {gallery.length === 0 ? (
                     <h2>Não há fotos para serem exibidas!</h2>
                 ) : (
                     <>
-                        <form>
-                            <p>Filtrar por:</p>
-                            <select
-                                value={filter.themeId}
-                                onChange={(e) =>
-                                    setFilter({
-                                        ...filter,
-                                        themeId: e.target.value,
-                                    })
-                                }
-                            >
-                                <option value={0}>Tema</option>
-                                {themes.map((theme) => (
-                                    <option value={theme.id} key={theme.id}>
-                                        {theme.name}
-                                    </option>
-                                ))}
-                            </select>
-                            <select
-                                value={filter.productId}
-                                onChange={(e) =>
-                                    setFilter({
-                                        ...filter,
-                                        productId: e.target.value,
-                                    })
-                                }
-                            >
-                                <option value={0}>Produto</option>
-                                {products.map((product) => (
-                                    <option value={product.id} key={product.id}>
-                                        {product.name}
-                                    </option>
-                                ))}
-                            </select>
-                        </form>
                         <section>
                             {gallery.map((picture) => (
-                                <img
-                                    src={picture.pictureUrl}
-                                    key={picture.id}
-                                    onClick={() => showPictureInfo(picture.id)}
-                                />
+                                <div>
+                                    <img
+                                        src={picture.pictureUrl}
+                                        key={picture.id}
+                                        onClick={() =>
+                                            showPictureInfo(picture.id)
+                                        }
+                                    />
+                                    {user && user.role === "ADMIN" ? (
+                                        <div>
+                                            <AiTwotoneDelete
+                                                onClick={() =>
+                                                    showDeletePopUp(picture.id)
+                                                }
+                                            />
+                                            <AiTwotoneEdit />
+                                        </div>
+                                    ) : (
+                                        <></>
+                                    )}
+                                </div>
                             ))}
                         </section>
                     </>
@@ -123,6 +155,15 @@ export default function Gallery() {
                     <PictureInfo
                         pictureInfo={pictureInfo}
                         setPictureInfo={setPictureInfo}
+                    />
+                ) : (
+                    <></>
+                )}
+                {deletePopUp.show ? (
+                    <DeletePopUp
+                        popUp={deletePopUp}
+                        setPopUp={setDeletePopUp}
+                        setFilter={setFilter}
                     />
                 ) : (
                     <></>
@@ -177,7 +218,26 @@ const Main = styled.main`
         cursor: pointer;
     }
 
+    section div {
+        display: flex;
+        align-items: center;
+    }
+
+    section div div {
+        flex-direction: column;
+    }
+
+    section div div svg {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
     svg {
+        color: var(--button-color);
+        cursor: pointer;
+    }
+
+    & > svg {
         position: absolute;
         bottom: 30px;
         right: 25px;
