@@ -11,7 +11,7 @@ import { api } from "../../utils/api";
 import Header from "../layout/Header/Header";
 import { useNavigate } from "react-router-dom";
 import PictureInfo from "../layout/Gallery/PictureInfo";
-import DeletePopUp from "../layout/PopUp/DeletePopUp";
+import DeletePicturePopUp from "../layout/PopUp/DeletePicturePopUp";
 
 export default function Gallery() {
     const [gallery, setGallery] = useState([]);
@@ -51,10 +51,10 @@ export default function Gallery() {
 
     function getFilter() {
         let getFilter = "?";
-        if (filter.themeId != 0) {
+        if (filter.themeId !== 0) {
             getFilter += `&theme=${filter.themeId}`;
         }
-        if (filter.productId != 0) {
+        if (filter.productId !== 0) {
             getFilter += `&product=${filter.productId}`;
         }
         return getFilter;
@@ -160,7 +160,7 @@ export default function Gallery() {
                     <></>
                 )}
                 {deletePopUp.show ? (
-                    <DeletePopUp
+                    <DeletePicturePopUp
                         popUp={deletePopUp}
                         setPopUp={setDeletePopUp}
                         setFilter={setFilter}

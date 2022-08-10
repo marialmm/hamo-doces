@@ -3,7 +3,7 @@ import { UserContext } from "../../../assets/contexts/userContext";
 import { api } from "../../../utils/api";
 import PopUp from "./PopUp";
 
-export default function DeletePopUp({ popUp, setPopUp, setFilter }) {
+export default function DeletePicturePopUp({ popUp, setPopUp, setFilter }) {
     const { header } = useContext(UserContext);
 
     function deletePicture() {
