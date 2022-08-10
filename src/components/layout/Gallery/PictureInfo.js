@@ -1,17 +1,17 @@
 import { ClickAwayListener } from "@mui/base";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
 import { AiFillCloseCircle } from "react-icons/ai";
 
 import { api } from "../../../utils/api";
-import { UserContext } from "../../../assets/contexts/userContext";
+import { useNavigate } from "react-router-dom";
 
 export default function PictureInfo({ pictureInfo, setPictureInfo }) {
     const { id, show } = pictureInfo;
     const [picture, setPicture] = useState({});
 
-    const { user } = useContext(UserContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const promise = api.get(`/pictures/${id}`);
@@ -38,7 +38,7 @@ export default function PictureInfo({ pictureInfo, setPictureInfo }) {
                 {Object.keys(picture).length > 0 ? (
                     <Section>
                         <img src={picture.pictureUrl} />
-                        <p>
+                        <p onClick={() => navigate(`/products/${picture.product.id}`)}>
                             <span>Produto:</span> {picture.product.name}
                         </p>
                         <p>

@@ -38,7 +38,14 @@ export default function App() {
                             </PrivateRoute>
                         }
                     />
-                    <Route path="/products" element={<Products />} />
+                    <Route
+                        path="/products"
+                        element={
+                            <PrivateRoute>
+                                <Products />
+                            </PrivateRoute>
+                        }
+                    />
                     <Route
                         path="/products/new"
                         element={
