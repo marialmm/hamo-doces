@@ -5,6 +5,7 @@ import { UserContext } from "../../assets/contexts/userContext";
 import { api } from "../../utils/api";
 
 import Header from "../layout/Header/Header";
+import New from "../layout/New";
 
 export default function NewPicture() {
     const [pictureInfo, setPicutreInfo] = useState({
@@ -33,7 +34,7 @@ export default function NewPicture() {
     return (
         <>
             <Header />
-            <Main>
+            <New>
                 <h2>Nova foto</h2>
                 <form onSubmit={sendPictureInfo}>
                     <input
@@ -107,78 +108,7 @@ export default function NewPicture() {
                     ))}
                     <button type="submit">Enviar</button>
                 </form>
-            </Main>
+            </New>
         </>
     );
 }
-
-const Main = styled.main`
-    padding: 20px;
-
-    h2 {
-        font-size: 25px;
-        font-weight: 700;
-    }
-
-    form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        max-width: 100%;
-        margin-top: 15px;
-    }
-
-    form input,
-    form select,
-    form textarea {
-        max-width: 90%;
-        width: 317px;
-        height: 40px;
-        border-radius: 5px;
-        padding: 5px;
-        margin-bottom: 10px;
-        border: 1px solid var(--accent-color);
-        font-size: 18px;
-        background-color: #ffffff;
-    }
-
-    form textarea {
-        height: 80px;
-    }
-
-    form label {
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        width: 90%;
-    }
-
-    form label input {
-        width: 20px;
-        height: 20px;
-        margin: 0px 5px 0 0;
-    }
-
-    form input:focus,
-    form select:focus,
-    form textarea:focus {
-        outline: 2px solid var(--accent-color);
-    }
-
-    form input::placeholder,
-    form textarea::placeholder {
-        font-size: 16px;
-    }
-
-    button {
-        width: 200px;
-        max-width: 80%;
-        height: 40px;
-        background-color: var(--button-color);
-        border: none;
-        border-radius: 10px;
-        font-size: 18px;
-        margin: 15px 0px;
-    }
-`;
