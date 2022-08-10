@@ -3,7 +3,9 @@ import { UserProvider } from "../assets/contexts/userContext";
 
 import { GlobalStyle } from "../assets/globalStyles/GlobalStyles";
 import Gallery from "./pages/Gallery";
+import NewOrder from "./pages/NewOrder";
 import NewPicture from "./pages/NewPicture";
+import NewProduct from "./pages/NewProduct";
 import Orders from "./pages/Orders";
 import Products from "./pages/Products";
 import Signin from "./pages/Signin";
@@ -28,7 +30,23 @@ export default function App() {
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/signin" element={<Signin />} />
                     <Route path="/orders" element={<Orders />} />
+                    <Route
+                        path="/orders/new"
+                        element={
+                            <PrivateRoute role="ADMIN">
+                                <NewOrder />
+                            </PrivateRoute>
+                        }
+                    />
                     <Route path="/products" element={<Products />} />
+                    <Route
+                        path="/products/new"
+                        element={
+                            <PrivateRoute role="ADMIN">
+                                <NewProduct />
+                            </PrivateRoute>
+                        }
+                    />
                 </Routes>
             </UserProvider>
         </BrowserRouter>
