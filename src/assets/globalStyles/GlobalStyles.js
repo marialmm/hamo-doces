@@ -60,6 +60,8 @@ export const GlobalStyle = createGlobalStyle`
 
         --font-color: #000000;
         --font-color-button: #FFFFFF;
+
+        --font-family-logo: 'Pinyon Script', cursive;
     }
 
     *{

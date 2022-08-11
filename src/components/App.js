@@ -7,6 +7,7 @@ import NewOrder from "./pages/NewOrder";
 import NewPicture from "./pages/NewPicture";
 import NewProduct from "./pages/NewProduct";
 import Orders from "./pages/Orders";
+import ProductInfo from "./pages/ProductInfo";
 import Products from "./pages/Products";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
@@ -51,6 +52,14 @@ export default function App() {
                         element={
                             <PrivateRoute role="ADMIN">
                                 <NewProduct />
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route
+                        path="/products/:id"
+                        element={
+                            <PrivateRoute>
+                                <ProductInfo />
                             </PrivateRoute>
                         }
                     />

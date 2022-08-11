@@ -18,8 +18,8 @@ export default function Gallery() {
     const [themes, setThemes] = useState([]);
     const [products, setProducts] = useState([]);
     const [filter, setFilter] = useState({
-        themeId: 0,
-        productId: 0,
+        themeId: "0",
+        productId: "0",
     });
     const [pictureInfo, setPictureInfo] = useState({
         show: false,
@@ -51,10 +51,10 @@ export default function Gallery() {
 
     function getFilter() {
         let getFilter = "?";
-        if (filter.themeId !== 0) {
+        if (filter.themeId !== "0") {
             getFilter += `&theme=${filter.themeId}`;
         }
-        if (filter.productId !== 0) {
+        if (filter.productId !== "0") {
             getFilter += `&product=${filter.productId}`;
         }
         return getFilter;
@@ -119,10 +119,10 @@ export default function Gallery() {
                     <>
                         <section>
                             {gallery.map((picture) => (
-                                <div>
+                                <div key={picture.id}>
                                     <img
                                         src={picture.pictureUrl}
-                                        key={picture.id}
+                                        alt=""
                                         onClick={() =>
                                             showPictureInfo(picture.id)
                                         }

@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "../../assets/contexts/userContext";
 import { api } from "../../utils/api";
@@ -8,6 +9,7 @@ export default function Products() {
     const [products, setProducts] = useState([]);
 
     const { header } = useContext(UserContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const promise = api.get("/products", header);
@@ -16,6 +18,7 @@ export default function Products() {
         });
         promise.catch((error) => {
             console.log(error.response);
+            alert("Um erro aconteceu, tente novamente");
         });
     }, []);
 
@@ -28,15 +31,20 @@ export default function Products() {
                     <h3>Não há produtos cadastrados!</h3>
                 ) : (
                     products.map((product) => (
-                        <>
-                            <section>
-                                <img src={product.picture} />
-                                <div>
-                                    <p><span>{product.name}</span></p>
-                                    <p><span>Preço:</span> {product.price}</p>
-                                </div>
-                            </section>
-                        </>
+                        <section
+                            onClick={() => navigate(`/products/${product.id}`)}
+                            key={product.id}
+                        >
+                            <img src={product.picture} />
+                            <div>
+                                <p>
+                                    <span>{product.name}</span>
+                                </p>
+                                <p>
+                                    <span>Preço:</span> {product.price}
+                                </p>
+                            </div>
+                        </section>
                     ))
                 )}
             </Main>
@@ -67,7 +75,8 @@ const Main = styled.main`
         margin: 20px;
         padding: 5px;
         width: 90%;
-        border: 1px solid var(--accent-color)
+        border: 1px solid var(--accent-color);
+        cursor: pointer;
     }
 
     section img {
@@ -80,7 +89,7 @@ const Main = styled.main`
         font-size: 20px;
     }
 
-    section p span{
+    section p span {
         font-weight: 700;
     }
 `;

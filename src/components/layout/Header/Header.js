@@ -45,8 +45,9 @@ const Container = styled.header`
     }
 
     h1 {
-        font-size: 30px;
+        font-size: 40px;
         font-weight: 700;
+        font-family: var(--font-family-logo);
         cursor: pointer;
     }
 `;
