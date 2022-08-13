@@ -1,12 +1,24 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import {
+    AiFillPlusCircle,
+    AiTwotoneDelete,
+    AiTwotoneEdit,
+} from "react-icons/ai";
+
 import { UserContext } from "../../assets/contexts/userContext";
 import { api } from "../../utils/api";
 import Header from "../layout/Header/Header";
+import DeleteProductPopUp from "../layout/PopUp/DeleteProductPopUp";
 
 export default function Products() {
     const [products, setProducts] = useState([]);
+    const [deletePopUp, setDeletePopUp] = useState({
+        show: false,
+        id: 0,
+    });
+    const [reload, setReload] = useState(true);
 
     const { header } = useContext(UserContext);
     const navigate = useNavigate();
@@ -20,7 +32,14 @@ export default function Products() {
             console.log(error.response);
             alert("Um erro aconteceu, tente novamente");
         });
-    }, []);
+    }, [reload]);
+
+    function showDeletePopUp(id) {
+        setDeletePopUp({
+            id,
+            show: true,
+        });
+    }
 
     return (
         <>
@@ -31,12 +50,19 @@ export default function Products() {
                     <h3>Não há produtos cadastrados!</h3>
                 ) : (
                     products.map((product) => (
-                        <section
-                            onClick={() => navigate(`/products/${product.id}`)}
-                            key={product.id}
-                        >
-                            <img src={product.picture} />
-                            <div>
+                        <section key={product.id}>
+                            <img
+                                src={product.picture}
+                                alt={product.name}
+                                onClick={() =>
+                                    navigate(`/products/${product.id}`)
+                                }
+                            />
+                            <div
+                                onClick={() =>
+                                    navigate(`/products/${product.id}`)
+                                }
+                            >
                                 <p>
                                     <span>{product.name}</span>
                                 </p>
@@ -44,8 +70,24 @@ export default function Products() {
                                     <span>Preço:</span> {product.price}
                                 </p>
                             </div>
+                            <div>
+                                <AiTwotoneDelete
+                                    onClick={() => showDeletePopUp(product.id)}
+                                />
+                                <AiTwotoneEdit />
+                            </div>
                         </section>
                     ))
+                )}
+                {deletePopUp.show ? (
+                    <DeleteProductPopUp
+                        popUp={deletePopUp}
+                        setPopUp={setDeletePopUp}
+                        reload={reload}
+                        setReload={setReload}
+                    />
+                ) : (
+                    <></>
                 )}
             </Main>
         </>
@@ -75,8 +117,10 @@ const Main = styled.main`
         margin: 20px;
         padding: 5px;
         width: 90%;
+        min-height: 75px;
         border: 1px solid var(--accent-color);
         cursor: pointer;
+        position: relative;
     }
 
     section img {
@@ -91,5 +135,24 @@ const Main = styled.main`
 
     section p span {
         font-weight: 700;
+    }
+
+    section div:first-child {
+        width: calc(60% - 70px);
+    }
+
+    section div:last-child {
+        position: absolute;
+        right: 15px;
+        height: 70px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    section div svg {
+        color: var(--button-color);
+        font-size: 28px;
+        cursor: pointer;
     }
 `;
