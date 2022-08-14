@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { MdLogout, MdLogin } from "react-icons/md";
 
-import Menu from "./Menu";
+import Menu from "./Menu/Menu";
 import { UserContext } from "../../../assets/contexts/userContext";
 import { useNavigate } from "react-router-dom";
 
