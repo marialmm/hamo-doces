@@ -9,9 +9,14 @@ import {
 import { UserContext } from "../../assets/contexts/userContext";
 import { api } from "../../utils/api";
 import Header from "../layout/Header/Header";
+import OrderInfo from "../layout/Orders/OrderInfo";
 
 export default function Orders() {
     const [orders, setOrders] = useState([]);
+    const [orderInfo, setOrderInfo] = useState({
+        id: 0,
+        show: false,
+    });
 
     const { header } = useContext(UserContext);
 
@@ -32,6 +37,13 @@ export default function Orders() {
         });
     }, []);
 
+    function showOrderInfo(id) {
+        setOrderInfo({
+            id,
+            show: true,
+        });
+    }
+
     return (
         <>
             <Header />
@@ -41,7 +53,9 @@ export default function Orders() {
                     orders.map((order) => {
                         return (
                             <>
-                                <section>
+                                <section
+                                    onClick={() => showOrderInfo(order.id)}
+                                >
                                     <p>
                                         <span>Cliente: </span>
                                         {order.clientName}
@@ -76,6 +90,14 @@ export default function Orders() {
                 ) : (
                     <h3>Não há encomendas cadastradas!</h3>
                 )}
+                {orderInfo.show ? (
+                    <OrderInfo
+                        orderInfo={orderInfo}
+                        setOrderInfo={setOrderInfo}
+                    />
+                ) : (
+                    <></>
+                )}
             </Main>
         </>
     );
@@ -93,7 +115,7 @@ const Main = styled.main`
         margin: 10px 0;
     }
 
-    h3{
+    h3 {
         width: 100%;
         text-align: center;
         font-size: 25px;
@@ -106,6 +128,10 @@ const Main = styled.main`
         padding: 10px;
         min-height: 175px;
         width: 250px;
+    }
+
+    & > section {
+        cursor: pointer;
     }
 
     section p,
