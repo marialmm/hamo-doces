@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
 import { AiFillCloseCircle } from "react-icons/ai";
+import { EditText } from "react-edit-text";
 
 import { UserContext } from "../../../assets/contexts/userContext";
 import { api } from "../../../utils/api";
@@ -39,33 +40,33 @@ export default function OrderInfo({ orderInfo, setOrderInfo }) {
         <Modal isOpen={show} onRequestClose={closeModal} style={customStyles}>
             {Object.keys(order).length > 0 ? (
                 <Section>
-                    <p>
+                    <div>
                         <span>Cliente: </span>
-                        {order.clientName}
-                    </p>
-                    <p>
+                        <EditText defaultValue={" " + order.clientName} />
+                    </div>
+                    <div>
                         <span>Data de entrega: </span>
                         {order.deliveryDate}
-                    </p>
-                    <p>
+                    </div>
+                    <div>
                         <span>Valor total: </span>
                         {order.totalPrice}
-                    </p>
-                    <p>
+                    </div>
+                    <div>
                         <span>Total pago: </span>
                         {order.amountPaid}
-                    </p>
-                    <p>
+                    </div>
+                    <div>
                         <span>Tema: </span>
                         {order.theme.name}
-                    </p>
-                    <p>
+                    </div>
+                    <div>
                         <span>Status: </span>
                         {status[order.status]}
-                    </p>
-                    <p>
+                    </div>
+                    <div>
                         <span>Produtos: </span>
-                    </p>
+                    </div>
                     <ul>
                         {order.products.map((product) => (
                             <ul>
@@ -106,7 +107,11 @@ const Section = styled.section`
     flex-direction: column;
     align-items: center;
 
-    p,
+    & > div {
+        display: flex;
+    }
+
+    div,
     li {
         font-size: 18px;
         line-height: 24px;

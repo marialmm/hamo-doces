@@ -26,8 +26,9 @@ export default function Signup() {
         }
         setPasswordError(false);
         delete user.confirmPassword;
+        console.log(user.adminPassword.length)
 
-        if ((user.adminPassword.length = 0)) {
+        if ((user.adminPassword.length === 0)) {
             user.adminPassword = "-";
         }
 

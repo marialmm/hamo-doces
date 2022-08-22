@@ -30,7 +30,14 @@ export default function App() {
                     />
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/signin" element={<Signin />} />
-                    <Route path="/orders" element={<Orders />} />
+                    <Route
+                        path="/orders"
+                        element={
+                            <PrivateRoute role="ADMIN">
+                                <Orders />
+                            </PrivateRoute>
+                        }
+                    />
                     <Route
                         path="/orders/new"
                         element={
